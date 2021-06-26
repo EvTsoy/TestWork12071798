@@ -1,0 +1,72 @@
+<template>
+  <div
+    class="d-flex justify-content-center align-items-center vh-100 text-center login-page"
+  >
+    <main class="form-signin">
+      <form>
+        <img
+          class="mb-4"
+          src="/docs/5.0/assets/brand/bootstrap-logo.svg"
+          alt=""
+          width="72"
+          height="57"
+        />
+        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+        <div class="form-floating">
+          <input
+            type="email"
+            class="form-control"
+            id="floatingInput"
+            placeholder="name@example.com"
+          />
+          <label for="floatingInput">Email address</label>
+        </div>
+        <div class="form-floating">
+          <input
+            type="password"
+            class="form-control"
+            id="floatingPassword"
+            placeholder="Password"
+          />
+          <label for="floatingPassword">Password</label>
+        </div>
+
+        <div class="checkbox mb-3">
+          <label>
+            <input type="checkbox" value="remember-me" /> Remember me
+          </label>
+        </div>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">
+          Sign in
+        </button>
+        <router-link :to="{ name: 'Projects' }">Projects</router-link>
+      </form>
+    </main>
+  </div>
+</template>
+
+<style scoped>
+.login-page {
+  background-color: #f5f5f5;
+  padding-bottom: 40px;
+  padding-top: 40px;
+}
+
+.form-signin {
+  width: 300px;
+  transform: translateY(-70px);
+}
+
+.form-signin input[type='password'] {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin-bottom: 10px;
+}
+
+.form-signin input[type='email'] {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-bottom: -1px;
+}
+</style>
