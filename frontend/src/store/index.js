@@ -1,7 +1,11 @@
 import { createStore } from 'vuex';
 
+import projectsModule from './modules/Projects';
+
 const store = createStore({
-  modules: {},
+  modules: {
+    projects: projectsModule,
+  },
 });
 
 export default store;

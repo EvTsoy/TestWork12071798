@@ -3,7 +3,7 @@
     class="d-flex justify-content-center align-items-center vh-100 text-center login-page"
   >
     <main class="form-signin">
-      <form>
+      <form @submit.prevent="submitForm">
         <img
           class="mb-4"
           src="/docs/5.0/assets/brand/bootstrap-logo.svg"
@@ -19,6 +19,7 @@
             class="form-control"
             id="floatingInput"
             placeholder="name@example.com"
+            v-model="form.email"
           />
           <label for="floatingInput">Email address</label>
         </div>
@@ -28,6 +29,7 @@
             class="form-control"
             id="floatingPassword"
             placeholder="Password"
+            v-model="form.password"
           />
           <label for="floatingPassword">Password</label>
         </div>
@@ -46,27 +48,44 @@
   </div>
 </template>
 
-<style scoped>
-.login-page {
-  background-color: #f5f5f5;
-  padding-bottom: 40px;
-  padding-top: 40px;
-}
+<script>
+export default {
+  data() {
+    return {
+      form: {
+        email: null,
+        password: null,
+      },
+    };
+  },
 
-.form-signin {
-  width: 300px;
-  transform: translateY(-70px);
-}
+  created() {
+    if (User.loggedIn()) {
+      this.$router.push({ name: 'Projects' });
+    }
+  },
 
-.form-signin input[type='password'] {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  margin-bottom: 10px;
-}
+  methods: {
+    submitForm() {
+      axios
+        .post('http://localhost/api/auth/login', this.form)
+        .then((res) => {
+          User.responseAfterLogin(res);
+          Toast.fire({
+            icon: 'success',
+            title: 'Signed in successfully',
+          });
 
-.form-signin input[type='email'] {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  margin-bottom: -1px;
-}
-</style>
+          this.$router.push({ name: 'Projects' });
+        })
+
+        .catch((error) => {
+          Toast.fire({
+            icon: 'warning',
+            title: error,
+          });
+        });
+    },
+  },
+};
+</script>

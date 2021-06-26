@@ -1,14 +1,16 @@
 <template>
   <div class="container">
-    <h1 class="text-center">Deatiled page for {{ id }}</h1>
+    <div class="row">
+      <div class="offset-md-2 col-md-8 text-end">
+        <a @click="$router.go(-1)" class="btn btn-primary">Back</a>
+      </div>
+    </div>
+    <h1 class="text-center">Project Details</h1>
     <div class="col-lg-8 mx-auto p-3 py-md-5">
       <main>
-        <h1>Get started with Bootstrap</h1>
+        <h1>{{ project.title }}</h1>
         <p class="fs-5 col-md-8">
-          Quickly and easily get started with Bootstrap's compiled,
-          production-ready files with this barebones example featuring some
-          basic HTML and helpful links. Download all our examples to get
-          started.
+          {{ project.content }}
         </p>
 
         <hr class="col-3 col-md-2 mb-5" />
@@ -78,8 +80,20 @@
 export default {
   props: ['id'],
 
+  computed: {
+    project() {
+      return this.$store.getters['projects/project'];
+    },
+  },
+
   created() {
-    console.log(this.id);
+    this.loadProjectDetails();
+  },
+
+  methods: {
+    loadProjectDetails() {
+      this.$store.dispatch('projects/loadProjectDetails', this.id);
+    },
   },
 };
 </script>

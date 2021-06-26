@@ -19,3 +19,26 @@ window.axios.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+// Import User Class
+import User from './Helpers/User';
+window.User = User;
+
+// start - SweetAlert2
+import Swal from 'sweetalert2';
+window.Swal = Swal;
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer);
+    toast.addEventListener('mouseleave', Swal.resumeTimer);
+  },
+});
+
+window.Toast = Toast;
+//   end - SweetAlert2

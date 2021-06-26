@@ -10,62 +10,31 @@
 
     <div class="row">
       <div class="offset-md-2 col-md-8">
-        <div class="card mt-4">
+        <div
+          class="card mt-4"
+          v-for="(project, index) in projects"
+          :key="`project-${index}`"
+        >
           <div class="card-header">
-            <span>Featured</span>
-            <i class="fas fa-edit"></i>
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">
-              With supporting text below as a natural lead-in to additional
-              content.
-            </p>
-            <router-link :to="projectDetailLink" class="btn btn-primary"
-              >Go somewhere</router-link
+            <span
+              >Posted by {{ project.user.name }} on
+              {{ project.created_at }}</span
             >
-          </div>
-        </div>
-
-        <div class="card mt-4">
-          <div class="card-header">
-            Featured
+            <div class="card_actions float-end">
+              <img src="../assets/images/pencil.svg" alt="" class="me-3" />
+              <img src="../assets/images/bin.svg" alt="" />
+            </div>
           </div>
           <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
+            <h5 class="card-title">{{ project.title }}</h5>
             <p class="card-text">
-              With supporting text below as a natural lead-in to additional
-              content.
+              {{ truncateP(project.content) }}
             </p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-
-        <div class="card mt-4">
-          <div class="card-header">
-            Featured
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">
-              With supporting text below as a natural lead-in to additional
-              content.
-            </p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-
-        <div class="card mt-4">
-          <div class="card-header">
-            Featured
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">
-              With supporting text below as a natural lead-in to additional
-              content.
-            </p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <router-link
+              :to="`${this.$route.path}/${project.id}`"
+              class="btn btn-primary"
+              >Read more...</router-link
+            >
           </div>
         </div>
       </div>
@@ -75,9 +44,23 @@
 
 <script>
 export default {
+  created() {
+    this.loadProjects();
+  },
+
+  methods: {
+    loadProjects() {
+      this.$store.dispatch('projects/loadProjects');
+    },
+
+    truncateP(str) {
+      return str.length > 47 ? str.substr(0, 47 - 1) + '...' : str;
+    },
+  },
+
   computed: {
-    projectDetailLink() {
-      return `${this.$route.path}/1`;
+    projects() {
+      return this.$store.getters['projects/projects'];
     },
   },
 };

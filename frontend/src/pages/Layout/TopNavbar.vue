@@ -1,7 +1,9 @@
 <template>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
     <div class="container">
-      <a class="navbar-brand" href="#">Top navbar</a>
+      <router-link class="navbar-brand" :to="{ name: 'Welcome' }"
+        >AWORK</router-link
+      >
       <button
         class="navbar-toggler"
         type="button"
@@ -16,18 +18,11 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link disabled"
-              href="#"
-              tabindex="-1"
-              aria-disabled="true"
-              >Disabled</a
+            <router-link
+              class="nav-link active"
+              aria-current="page"
+              :to="{ name: 'Projects' }"
+              >Projects</router-link
             >
           </li>
         </ul>
