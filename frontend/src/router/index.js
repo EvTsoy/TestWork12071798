@@ -6,6 +6,7 @@ import WelcomePage from '../pages/Welcome.vue';
 import Projects from '../pages/Projects.vue';
 import ProjectDetails from '../pages/ProjectDetails.vue';
 import ProjectCreate from '../pages/ProjectCreate.vue';
+import ProjectPatch from '../pages/ProjectPatch.vue';
 
 const routes = [
   {
@@ -37,6 +38,12 @@ const routes = [
         path: '/projects/create',
         name: 'ProjectCreate',
         component: ProjectCreate,
+      },
+      {
+        path: '/projects/:id/edit',
+        name: 'ProjectPatch',
+        props: true,
+        component: ProjectPatch,
       },
     ],
   },

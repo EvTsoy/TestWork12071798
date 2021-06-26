@@ -21,8 +21,12 @@
               {{ project.created_at }}</span
             >
             <div class="card_actions float-end">
-              <img src="../assets/images/pencil.svg" alt="" class="me-3" />
-              <img src="../assets/images/bin.svg" alt="" />
+              <router-link :to="`${this.$route.path}/${project.id}/edit`">
+                <img src="../assets/images/pencil.svg" alt="" class="me-3" />
+              </router-link>
+              <a href="" @click.prevent="deleteProject(project.id)">
+                <img src="../assets/images/bin.svg" alt="" />
+              </a>
             </div>
           </div>
           <div class="card-body">
@@ -55,6 +59,23 @@ export default {
 
     truncateP(str) {
       return str.length > 47 ? str.substr(0, 47 - 1) + '...' : str;
+    },
+
+    deleteProject(id) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+      }).then(async (result) => {
+        if (result.value) {
+          await this.$store.dispatch('projects/deleteProject', id);
+          Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+        }
+      });
     },
   },
 

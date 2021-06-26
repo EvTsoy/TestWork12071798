@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
@@ -15,7 +16,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::with('user')->get();
+        $projects = Project::with('user')->latest()->get();
         return $projects;
     }
 
@@ -27,7 +28,20 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            'title' => 'required|max:255',
+            'content' => 'required',
+           ]);
+
+           $project = new Project();
+           $project->title = $request->title;
+           $project->content = $request->content;
+           $project->user_id = $request->user_id;
+           $project->save();
+           return $project;
+
+
+
     }
 
     /**
@@ -51,7 +65,13 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $data = array();
+        $data['title'] = $request->title;
+        $data['content'] = $request->content;
+
+        $project = DB::table('projects')->where('id', $id)->update($data);
+        return $project;
     }
 
     /**
@@ -62,6 +82,6 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('projects')->where('id',$id)->delete();
     }
 }
