@@ -12,26 +12,22 @@ export default {
   },
 
   async createProject({ commit }, payload) {
-    await axios
-      .post(`http://localhost/api/projects`, { ...payload, user_id: User.id() })
-      .then((res) => {
-        console.log(res);
-        // commit('createProject', res.data);
-      });
+    await axios.post(`http://localhost/api/projects`, payload).then((res) => {
+      // console.log(res);
+      // commit('createProject', res.data);
+    });
   },
 
   async patchProject({ commit }, form) {
     await axios
       .put(`http://localhost/api/projects/${form.id}`, form)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         // commit('patchProject', res.data);
       });
   },
   async deleteProject({ commit }, id) {
-    console.log('deleted', id);
     await axios.delete(`http://localhost/api/projects/${id}`).then((res) => {
-      console.log(res);
       commit('deleteProject', id);
     });
   },

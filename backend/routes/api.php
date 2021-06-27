@@ -17,5 +17,8 @@ Route::group([
     // Route::post('me', 'AuthController@me');
 
 });
+Route::middleware(['auth:api'])->group(function (){
+    Route::apiResource('/projects', ProjectController::class);
 
-Route::apiResource('/projects', ProjectController::class);
+});
+

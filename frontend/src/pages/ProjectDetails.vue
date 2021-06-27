@@ -7,7 +7,10 @@
     </div>
     <h1 class="text-center">Project Details</h1>
     <div class="col-lg-8 mx-auto p-3 py-md-5">
-      <main>
+      <div v-if="isLoading">
+        <base-spinner></base-spinner>
+      </div>
+      <main v-else>
         <h1>{{ project.title }}</h1>
         <p class="fs-5 col-md-8">
           {{ project.content }}
@@ -80,6 +83,12 @@
 export default {
   props: ['id'],
 
+  data() {
+    return {
+      isLoading: false,
+    };
+  },
+
   computed: {
     project() {
       return this.$store.getters['projects/project'];
@@ -91,8 +100,10 @@ export default {
   },
 
   methods: {
-    loadProjectDetails() {
-      this.$store.dispatch('projects/loadProjectDetails', this.id);
+    async loadProjectDetails() {
+      this.isLoading = true;
+      await this.$store.dispatch('projects/loadProjectDetails', this.id);
+      this.isLoading = false;
     },
   },
 };

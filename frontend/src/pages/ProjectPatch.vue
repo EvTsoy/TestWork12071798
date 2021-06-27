@@ -22,6 +22,7 @@ export default {
         title: '',
         content: '',
       },
+      isLoading: false,
     };
   },
 
@@ -30,6 +31,7 @@ export default {
       await this.$store.dispatch('projects/patchProject', {
         ...form,
         id: this.id,
+        user_id: User.id(),
       });
       this.$router.replace({ name: 'ProjectDetails', id: this.id });
     },

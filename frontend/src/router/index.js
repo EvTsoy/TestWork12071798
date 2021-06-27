@@ -7,6 +7,8 @@ import Projects from '../pages/Projects.vue';
 import ProjectDetails from '../pages/ProjectDetails.vue';
 import ProjectCreate from '../pages/ProjectCreate.vue';
 import ProjectPatch from '../pages/ProjectPatch.vue';
+// End Auth
+import UserLogout from '../pages/auth/UserLogout.vue';
 
 const routes = [
   {
@@ -18,6 +20,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: UserAuth,
+  },
+  {
+    path: '/logout',
+    name: 'Logout',
+    component: UserLogout,
   },
   {
     path: '/projects',

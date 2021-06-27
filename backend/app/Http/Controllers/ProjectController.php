@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -28,20 +35,8 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $request->validate([
-            'title' => 'required|max:255',
-            'content' => 'required',
-           ]);
-
-           $project = new Project();
-           $project->title = $request->title;
-           $project->content = $request->content;
-           $project->user_id = $request->user_id;
-           $project->save();
-           return $project;
-
-
-
+        $project = Project::create($this->validateData());
+        return $project;
     }
 
     /**
@@ -63,14 +58,9 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Project $project)
     {
-
-        $data = array();
-        $data['title'] = $request->title;
-        $data['content'] = $request->content;
-
-        $project = DB::table('projects')->where('id', $id)->update($data);
+        $project->update($this->validateData());
         return $project;
     }
 
@@ -80,8 +70,17 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Project $project)
     {
-        DB::table('projects')->where('id',$id)->delete();
+        $project->delete();
+    }
+
+    private function validateData()
+    {
+        return request()->validate([
+            'title' => 'required|max:255',
+            'content' => 'required',
+            'user_id' => 'required',
+        ]);
     }
 }

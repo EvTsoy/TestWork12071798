@@ -10,7 +10,11 @@
 
     <div class="row">
       <div class="offset-md-2 col-md-8">
+        <div v-if="isLoading">
+          <base-spinner></base-spinner>
+        </div>
         <div
+          v-else
           class="card mt-4"
           v-for="(project, index) in projects"
           :key="`project-${index}`"
@@ -48,13 +52,25 @@
 
 <script>
 export default {
+  data() {
+    return {
+      isLoading: false,
+    };
+  },
+
   created() {
-    this.loadProjects();
+    if (!User.loggedIn()) {
+      this.$router.push({ name: 'Login' });
+    } else {
+      this.loadProjects();
+    }
   },
 
   methods: {
-    loadProjects() {
-      this.$store.dispatch('projects/loadProjects');
+    async loadProjects() {
+      this.isLoading = true;
+      await this.$store.dispatch('projects/loadProjects');
+      this.isLoading = false;
     },
 
     truncateP(str) {

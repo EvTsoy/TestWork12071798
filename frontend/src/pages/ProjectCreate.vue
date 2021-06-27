@@ -17,7 +17,10 @@ export default {
 
   methods: {
     async createProject(form) {
-      await this.$store.dispatch('projects/createProject', form);
+      await this.$store.dispatch('projects/createProject', {
+        ...form,
+        user_id: User.id(),
+      });
       this.$router.push({ name: 'Projects' });
     },
   },
